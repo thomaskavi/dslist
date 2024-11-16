@@ -4,6 +4,8 @@ Veja abaixo uma demonstração do projeto em ação:
 
 ![Demonstração do Projeto](https://i.imgur.com/MDDZbzc.gif)
 
+![Comunicação Frontend e Backend](https://i.imgur.com/1jjhdRF.gif)
+
 ## 📃 Descrição
 
 Os principais recursos da API incluem:
