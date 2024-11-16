@@ -75,7 +75,6 @@ const GameList = () => {
         sourceIndex,
         destinationIndex,
       });
-      console.log("Ordem atualizada no backend.");
     } catch (error) {
       console.error("Erro ao atualizar a ordem no backend:", error);
     }
@@ -117,7 +116,7 @@ const GameList = () => {
               <div className="game-details">
                 <h3>{game.title}</h3>
                 <p>{game.shortDescription}</p>
-                <p className="game-rating">Avaliação: {game.score}<FontAwesomeIcon icon={faStar} size="1x" style={{ paddingLeft: "5px", color: "#e7ea19" }} /> </p>
+                <p className="game-rating">Avaliação: {game.score}<FontAwesomeIcon icon={faStar} size="1x" style={{ paddingLeft: "5px", marginBottom: "0.5px", color: "#000" }} /> </p>
                 <p className="game-release-date">Data de Lançamento: {game.year}</p>
               </div>
             </div>
