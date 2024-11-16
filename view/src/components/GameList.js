@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react"; // Use 'useEffect' para carregar jogos iniciais
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './GameList.css';
+import "./GameList.css";
 
 const GameList = () => {
   const [games, setGames] = useState([]);
-  const [allGames, setAllGames] = useState([]); // Adicionando estado para todos os jogos
+  const [selectedGenre, setSelectedGenre] = useState(null); // Armazena o gênero selecionado
   const navigate = useNavigate();
 
-  // Função para carregar jogos baseados no gênero
   const loadGames = async (genreId) => {
     try {
       const response = await axios.get(`http://localhost:8080/lists/${genreId}/games`);
@@ -18,46 +17,90 @@ const GameList = () => {
     }
   };
 
-  // Função para carregar todos os jogos
-  const loadAllGames = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/games`); // Endereço de todos os jogos
-      setAllGames(response.data);
-      setGames(response.data);  // Inicialmente, exibe todos os jogos
-    } catch (error) {
-      console.error("Erro ao carregar todos os jogos:", error);
+  const handleGenreClick = (genreId) => {
+    if (selectedGenre === genreId) {
+      // Se o gênero já foi selecionado, limpar a lista
+      setGames([]);
+      setSelectedGenre(null);
+    } else {
+      // Caso contrário, carregar os jogos do gênero
+      loadGames(genreId);
+      setSelectedGenre(genreId);
     }
   };
 
-  // Função que será chamada ao clicar nos botões de filtro
-  const handleGenreChange = (genreId) => {
-    loadGames(genreId);  // Carregar os jogos do gênero selecionado
+  useEffect(() => {
+    if (selectedGenre) {
+      loadGames(selectedGenre);
+    }
+  }, [selectedGenre]);
+
+  const [draggedIndex, setDraggedIndex] = useState(null);
+
+  // Função chamada ao começar a arrastar
+  const handleDragStart = (index) => {
+    setDraggedIndex(index);
   };
 
-  // UseEffect para carregar todos os jogos ao carregar a página
-  useEffect(() => {
-    loadAllGames(); // Carregar todos os jogos inicialmente
-  }, []);
+  // Função chamada ao soltar o item
+  const handleDrop = (droppedIndex) => {
+    if (draggedIndex === null || draggedIndex === droppedIndex) return;
+
+    const updatedGames = [...games];
+    const [movedGame] = updatedGames.splice(draggedIndex, 1);
+    updatedGames.splice(droppedIndex, 0, movedGame);
+
+    setGames(updatedGames);
+    updateGameOrder(draggedIndex, droppedIndex);
+
+    setDraggedIndex(null); // Resetando o estado
+  };
+
+  // Atualiza a ordem no backend
+  const updateGameOrder = async (sourceIndex, destinationIndex) => {
+    try {
+      await axios.post(`http://localhost:8080/lists/${selectedGenre}/replacement`, {
+        sourceIndex,
+        destinationIndex,
+      });
+      console.log("Ordem atualizada no backend.");
+    } catch (error) {
+      console.error("Erro ao atualizar a ordem no backend:", error);
+    }
+  };
 
   return (
-    <div>
-      <button className="back-button" onClick={() => navigate('/')}>Voltar</button>
-      <h2>Escolha um Gênero</h2>
+    <div className="game-list-container">
+      <button className="back-button" onClick={() => navigate("/")}>Voltar</button>
 
-      {/* Menu de Filtro de Gêneros */}
       <div className="genre-filter">
-        <button onClick={() => setGames(allGames)}>Mostrar Todos</button> {/* Botão para mostrar todos os jogos */}
-        <button onClick={() => handleGenreChange(1)}>Aventura e RPG</button>
-        <button onClick={() => handleGenreChange(2)}>Jogos de Plataforma</button>
+        <button onClick={() => handleGenreClick(1)}>Aventura e RPG</button>
+        <button onClick={() => handleGenreClick(2)}>Jogos de Plataforma</button>
       </div>
 
-      <h2>Lista de Jogos</h2>
+      <h2>{selectedGenre ? "Lista de Jogos" : "Escolha um Gênero"}</h2>
+
+      <div className="message">
+        {games.length === 0 && !selectedGenre && (
+          <p>Escolha um gênero para começar.</p>
+        )}
+
+        {games.length === 0 && selectedGenre && (
+          <p>Não há jogos disponíveis para o gênero selecionado.</p>
+        )}
+      </div>
+
       <div className="game-list">
-        {games.length === 0 ? (
-          <p>Não há jogos disponíveis para o gênero selecionado. Exibindo todos os jogos.</p>
-        ) : (
-          games.map((game) => (
-            <div key={game.id} className="game-item">
+        {games.length > 0 && (
+          games.map((game, index) => (
+            <div
+              key={game.id}
+              className="game-item"
+              draggable
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(e) => e.preventDefault()} // Permitir soltar
+              onDrop={() => handleDrop(index)} // Chamado quando soltar o item
+            >
               <img src={game.imgUrl} alt={game.title} className="game-image" />
               <div className="game-details">
                 <h3>{game.title}</h3>
