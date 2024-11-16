@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./GameList.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const GameList = () => {
   const [games, setGames] = useState([]);
@@ -115,7 +117,7 @@ const GameList = () => {
               <div className="game-details">
                 <h3>{game.title}</h3>
                 <p>{game.shortDescription}</p>
-                <p className="game-rating">Avaliação: {game.score}</p>
+                <p className="game-rating">Avaliação: {game.score}<FontAwesomeIcon icon={faStar} size="1x" style={{ paddingLeft: "5px", color: "#e7ea19" }} /> </p>
                 <p className="game-release-date">Data de Lançamento: {game.year}</p>
               </div>
             </div>
