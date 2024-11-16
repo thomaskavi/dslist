@@ -8,9 +8,12 @@ public interface GameMinProjection {
 
   Integer getGameYear();
 
+  Double getScore();
+
   String getImgUrl();
 
   String getShortDescription();
 
   Integer getPosition();
+
 }

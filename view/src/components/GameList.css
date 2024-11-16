@@ -1,0 +1,128 @@
+/* GameList.css */
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #2f2f2f;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.game-item {
+  display: flex;
+  background-color: #333;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.game-image {
+  width: 140px;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+  transition: transform 0.3s ease;
+}
+
+.game-image:hover {
+  transform: scale(1.05);
+}
+
+.game-details {
+  flex: 1;
+  color: #fff;
+}
+
+.game-item h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+}
+
+.game-item p {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #bbb;
+}
+
+.game-rating,
+.game-release-date {
+  font-size: 14px;
+  color: #ddd;
+  margin-top: 8px;
+}
+
+.game-item img {
+  max-width: 100%;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* Botão Voltar */
+.back-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+.genre-filter {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.genre-filter button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.genre-filter button:hover {
+  background-color: #218838;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-top: 0;
+}

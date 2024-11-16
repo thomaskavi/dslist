@@ -13,6 +13,7 @@ public class GameMinDTO {
   private Long id;
   private String title;
   private Integer year;
+  private Double score;
   private String imgUrl;
   private String shortDescription;
 
@@ -20,6 +21,7 @@ public class GameMinDTO {
     id = entity.getId();
     title = entity.getTitle();
     year = entity.getYear();
+    score = entity.getScore();
     imgUrl = entity.getImgUrl();
     shortDescription = entity.getShortDescription();
   }
@@ -28,6 +30,7 @@ public class GameMinDTO {
     id = projection.getId();
     title = projection.getTitle();
     year = projection.getGameYear();
+    score = projection.getScore();
     imgUrl = projection.getImgUrl();
     shortDescription = projection.getShortDescription();
   }

@@ -1,0 +1,57 @@
+/* HomePage.css */
+
+/* Definindo o fundo da página inicial com uma imagem gamer ou cor de fundo */
+.home-container {
+  position: relative;
+  height: 100vh;
+  background: url('https://img2.wallspic.com/crops/7/5/1/0/7/170157/170157-gamer-purple-electronic_instrument-music-entertainment-1920x1080.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  font-family: 'Press Start 2P', cursive; /* Fonte de estilo gamer */
+}
+
+.content {
+  backdrop-filter: blur(5px);
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  font-size: 60px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.start-button {
+  background-color: #ff6600; /* Cor vibrante para o botão */
+  color: white;
+  font-size: 18px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+  background-color: #e55b00; /* Mudança na cor ao passar o mouse */
+  transform: scale(1.05);
+}
+
+.start-button:active {
+  transform: scale(1.02);
+}
