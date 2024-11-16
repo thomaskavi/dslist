@@ -1,5 +1,6 @@
 /* GameList.css */
 
+/* Títulos e estrutura geral */
 .game-list-container {
   display: flex;
   flex-direction: column;
@@ -8,14 +9,12 @@
   font-family: Arial, sans-serif;
 }
 
-/* Título */
 h2 {
   font-size: 24px;
   color: #333;
   margin-top: 20px;
 }
 
-/* Estilizando a área de filtro de gêneros */
 .genre-filter {
   display: flex;
   justify-content: center;
@@ -23,7 +22,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Botões de gênero */
+/* Botões de filtro de gênero */
 .genre-filter button {
   padding: 10px 20px;
   font-size: 16px;
@@ -41,7 +40,6 @@ h2 {
   border-color: #0056b3;
 }
 
-/* Estilizando a mensagem de "Escolha um Gênero" */
 .message p {
   font-size: 18px;
   color: #777;
@@ -49,7 +47,6 @@ h2 {
   margin-top: 10px;
 }
 
-/* Estilos gerais para a lista de jogos */
 .game-list {
   display: flex;
   flex-direction: column;

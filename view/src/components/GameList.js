@@ -5,13 +5,12 @@ import "./GameList.css";
 
 const GameList = () => {
   const [games, setGames] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState(null); // Armazena o gênero selecionado
+  const [selectedGenre, setSelectedGenre] = useState(null);
   const navigate = useNavigate();
 
   const loadGames = async (genreId) => {
     try {
       const response = await axios.get(`http://localhost:8080/lists/${genreId}/games`);
-      console.log(response.data); // Verifique os dados retornados da API
       setGames(response.data);
     } catch (error) {
       console.error("Erro ao carregar os jogos:", error);
@@ -20,11 +19,9 @@ const GameList = () => {
 
   const handleGenreClick = (genreId) => {
     if (selectedGenre === genreId) {
-      // Se o gênero já foi selecionado, limpar a lista
       setGames([]);
       setSelectedGenre(null);
     } else {
-      // Caso contrário, carregar os jogos do gênero
       loadGames(genreId);
       setSelectedGenre(genreId);
     }
@@ -38,26 +35,38 @@ const GameList = () => {
 
   const [draggedIndex, setDraggedIndex] = useState(null);
 
-  // Função chamada ao começar a arrastar
-  const handleDragStart = (index) => {
+  const handleDragStart = (index, e) => {
     setDraggedIndex(index);
+    e.dataTransfer.setData("text", index); // Transferir o índice para o evento
   };
 
-  // Função chamada ao soltar o item
-  const handleDrop = (droppedIndex) => {
+  const handleDrop = (droppedIndex, e) => {
+    const sourceIndex = e.dataTransfer.getData("text"); // Obter o índice da origem
     if (draggedIndex === null || draggedIndex === droppedIndex) return;
 
     const updatedGames = [...games];
-    const [movedGame] = updatedGames.splice(draggedIndex, 1);
+    const [movedGame] = updatedGames.splice(sourceIndex, 1);
     updatedGames.splice(droppedIndex, 0, movedGame);
 
     setGames(updatedGames);
-    updateGameOrder(draggedIndex, droppedIndex);
+    updateGameOrder(sourceIndex, droppedIndex);
 
-    setDraggedIndex(null); // Resetando o estado
+    setDraggedIndex(null);
   };
 
-  // Atualiza a ordem no backend
+  const handleDragOver = (e) => {
+    e.preventDefault(); // Permitir o arrasto
+    const scrollSpeed = 10; // Velocidade da rolagem
+    const { clientY } = e;
+
+    // Verificar se o mouse está próximo ao topo ou ao final da lista e rolar a página
+    if (clientY < 100) {
+      window.scrollBy(0, -scrollSpeed); // Rola para cima
+    } else if (clientY > window.innerHeight - 100) {
+      window.scrollBy(0, scrollSpeed); // Rola para baixo
+    }
+  };
+
   const updateGameOrder = async (sourceIndex, destinationIndex) => {
     try {
       await axios.post(`http://localhost:8080/lists/${selectedGenre}/replacement`, {
@@ -92,15 +101,15 @@ const GameList = () => {
       </div>
 
       <div className="game-list">
-        {games.length > 0 && (
+        {games.length > 0 &&
           games.map((game, index) => (
             <div
               key={game.id}
               className="game-item"
               draggable
-              onDragStart={() => handleDragStart(index)}
-              onDragOver={(e) => e.preventDefault()} // Permitir soltar
-              onDrop={() => handleDrop(index)} // Chamado quando soltar o item
+              onDragStart={(e) => handleDragStart(index, e)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(index, e)}
             >
               <img src={game.imgUrl} alt={game.title} className="game-image" />
               <div className="game-details">
@@ -110,11 +119,11 @@ const GameList = () => {
                 <p className="game-release-date">Data de Lançamento: {game.year}</p>
               </div>
             </div>
-          ))
-        )}
+          ))}
       </div>
     </div>
   );
 };
+
 
 export default GameList;
