@@ -11,6 +11,7 @@ const GameList = () => {
   const loadGames = async (genreId) => {
     try {
       const response = await axios.get(`http://localhost:8080/lists/${genreId}/games`);
+      console.log(response.data); // Verifique os dados retornados da API
       setGames(response.data);
     } catch (error) {
       console.error("Erro ao carregar os jogos:", error);
