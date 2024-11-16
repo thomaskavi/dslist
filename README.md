@@ -1,3 +1,9 @@
+## 🎥 Demonstração
+
+Veja abaixo uma demonstração do projeto em ação:
+
+![Demonstração do Projeto](https://i.imgur.com/MDDZbzc.gif)
+
 ## 📃 Descrição
 
 Os principais recursos da API incluem:
